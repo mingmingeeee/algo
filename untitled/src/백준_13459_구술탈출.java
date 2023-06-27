@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 // 단순 구현 + DFS
+// 소요시간 => 00:35:42
 
 public class 백준_13459_구술탈출 {
 
@@ -59,12 +60,12 @@ public class 백준_13459_구술탈출 {
 
     private static void simulate(int rx, int ry, int bx, int by) {
         // 1. 이동하기
-        go(rx, ry, bx, by, 1);
+        go(rx, ry, bx, by, 0);
     }
 
     private static void go(int rx, int ry, int bx, int by, int cnt) {
 
-        if(cnt > 10)
+        if(cnt >= 10)
             return;
 
         for(int d = 0; d < 4; d++) {
