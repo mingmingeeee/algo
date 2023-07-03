@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 // 조건 잘 읽자...ㅠ^ ㅠ..
 
 
-public class 백준_12100_2048 {
+public class 백준_12100_2048_1 {
 
     // 좌, 우, 상, 하
     private static final int[] dx = {0, 0, -1, 1};
