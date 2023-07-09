@@ -23,14 +23,6 @@ public class 백준_3190_뱀 {
             this.x = x;
             this.y = y;
         }
-        @Override
-        public boolean equals(Object obj) {
-            Pair o = (Pair) obj;
-            if(x == o.x && y == o.y) {
-                return true;
-            }
-            return false;
-        }
     }
 
     public static void main(String[] args) throws Exception {
