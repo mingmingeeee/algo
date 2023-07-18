@@ -26,9 +26,12 @@ class Solution {
         }
         
         String sum = "ICN";
-        for(String airport : map.get("ICN")) {
+        for(int i = 0; i < map.get("ICN").size(); i++) {
+            String airport = map.get("ICN").get(i);
+            boolean[] v = visited.get("ICN");
+            v[i] = true;
             dfs(airport, sum + " " + airport, 0);
-            
+            v[i] = false;
         }
         
     
@@ -38,8 +41,6 @@ class Solution {
     
     private static boolean isChecked = false;
     private static void dfs(String airport, String sum, int cnt) {
-
-        
 
         if(isChecked)
             return;
