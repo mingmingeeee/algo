@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 
-// 소요 시간 : 1h10m12s43
+
 
 public class Main {
 
@@ -149,32 +149,33 @@ public class Main {
 
     private static void move(FireBall ball) {
 
-        int nx = isRange(ball.r, ball.d, ball.s, 0);
-        int ny = isRange(ball.c, ball.d, ball.s, 1);
+        int r = (N + ball.r + dx[ball.d] * (ball.s % N)) % N;
+        int c = (N + ball.c + dy[ball.d] * (ball.s % N)) % N;
 
         list.remove(ball);
         map[ball.r][ball.c].remove(ball);
 
-        ball.r = nx;
-        ball.c = ny;
-        map[nx][ny].add(ball);
+        ball.r = r;
+        ball.c = c;
+
+        map[ball.r][ball.c].add(ball);
 
     }
 
-    private static int isRange(int pos, int d, int s, int type) {
-        for(int cnt = 0; cnt < s; cnt++) {
-            if(type == 0)
-                pos += dx[d];
-            else
-                pos += dy[d];
-
-            if(pos == -1)
-                pos = N - 1;
-            if(pos == N)
-                pos = 0;
-        }
-        return pos;
-    }
+//    private static int isRange(int pos, int d, int s, int type) {
+//        for(int cnt = 0; cnt < s; cnt++) {
+//            if(type == 0)
+//                pos += dx[d];
+//            else
+//                pos += dy[d];
+//
+//            if(pos == -1)
+//                pos = N - 1;
+//            if(pos == N)
+//                pos = 0;
+//        }
+//        return pos;
+//    }
 
 }
 
