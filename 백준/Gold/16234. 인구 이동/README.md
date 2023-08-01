@@ -1,5 +1,9 @@
 # [Gold IV] 인구 이동 - 16234 
 
+DFS + 구현
+
+연합마다 번호 매기는 배열 만들어서 계산
+
 [문제 링크](https://www.acmicpc.net/problem/16234) 
 
 ### 성능 요약
