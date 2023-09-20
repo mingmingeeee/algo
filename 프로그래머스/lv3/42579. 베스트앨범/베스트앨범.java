@@ -1,83 +1,82 @@
 import java.util.*;
 
 class Solution {
-    class Song {
+    static class Song {
+        int play;
         String genre;
-        int playCnt;
-        
-        public Song(int playCnt, String genre) {
-            this.playCnt = playCnt;
+        public Song(int play, String genre) {
+            this.play = play;
             this.genre = genre;
         }
     }
     public int[] solution(String[] genres, int[] plays) {
+        int[] answer = {};
         
         Map<Integer, Song> map = new HashMap<>();
-        Map<String, Integer> genreCnt = new HashMap<>();
-        int n = genres.length;
-        for(int i = 0; i < n; i++) {
+        Map<String, Integer> gCnt = new HashMap<>();
+        for(int i = 0; i < genres.length; i++) {
             String genre = genres[i];
-            Song song = new Song(plays[i], genre);
-            int cnt = plays[i];
-            if(genreCnt.get(genre) != null) {
-                cnt += genreCnt.get(genre);
+            
+            if(gCnt.get(genre) == null) {
+                gCnt.put(genre, plays[i]);
+            } else {
+                gCnt.put(genre, gCnt.get(genre) + plays[i]);
             }
-            map.put(i, song);
-            genreCnt.put(genre, cnt);
+            map.put(i, new Song(plays[i], genre));
         }
         
-        List<Integer> keySet = new ArrayList<>(map.keySet());
-        List<String> stringKey = new ArrayList<>(genreCnt.keySet());
-        Collections.sort(stringKey, new Comparator<String>() {
+        List<Integer> numList = new ArrayList<>(map.keySet());       
+        List<String> gList = new ArrayList<>(gCnt.keySet());
+     
+        Collections.sort(gList, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return genreCnt.get(o2) - genreCnt.get(o1);
+                return gCnt.get(o2) - gCnt.get(o1);
             }
         });
-        Collections.sort(keySet, new Comparator<Integer>() {
-           @Override
+        Collections.sort(numList, new Comparator<Integer>(){
+            @Override
             public int compare(Integer o1, Integer o2) {
-                int a = genreCnt.get(map.get(o2).genre);
-                int b = genreCnt.get(map.get(o1).genre);
+                int a = gCnt.get(map.get(o1).genre);
+                int b = gCnt.get(map.get(o2).genre);
                 if(a == b) {
-                    if(map.get(o2).playCnt == map.get(o1).playCnt) {
+                    if(map.get(o1).play == map.get(o2).play) {
                         return o1 - o2;
                     }
-                    return map.get(o2).playCnt - map.get(o1).playCnt;
+                    return map.get(o2).play - map.get(o1).play;
                 }
-                return a - b;
+                return b - a;
             }
         });
         
-
         List<Integer> list = new ArrayList<>();
-        for(String key : stringKey) {
+        for(String g : gList) {
             
             int cnt = 0;
-            for(Integer k : keySet) {
-                if(map.get(k).genre.equals(key)) {
-                    if(cnt == 2) break;
-                    list.add(k);
+            for(Integer n : numList) {
+                if(map.get(n).genre.equals(g)) {
+                    list.add(n);
                     cnt++;
                 }
+                if(cnt == 2)
+                    break;
             }
             
         }
-       
-    
-        int[] answer = new int[list.size()];
-        int i = 0;
-        for(Integer k : list) {
-            answer[i++] = k;
-        }  
-       
+        
+        answer = new int[list.size()];
+        int idx = 0;
+        for(Integer n : list) {
+            answer[idx++] = n;
+        }
+        
         return answer;
     }
 }
 
-// 노래 장르 genres, 노래별 재생 횟수 plays
-// 베스트 앨범에 들어갈 노래의 고유 번호 순서대로 return
+// 장르 별로 가장 많이 재생된 노래를 두 개씩 모아 베스트 앨범 출시
+// 노래: 고유 번호로 구분
 
-// 1. 속한 노래가 가장 많이 재생된 장르 
-// 2. 장르 내에서 많이 재생된 노래 
-// 3. 고유 번호가 낮은 노래
+// 1. 속한 노래가 많이 재생된 장르 먼저 수록
+// 2. 장르 내에서 많이 재생된 노래 먼저 수록
+// 3. 장르 내에서 재생 횟수가 같은 노래 중에는 고유 번호가 낮은 노래 먼저 수록
